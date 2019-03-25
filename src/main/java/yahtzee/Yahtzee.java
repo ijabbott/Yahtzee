@@ -4,9 +4,11 @@
 package yahtzee;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Yahtzee {
     final int invalidCategoryScore = 0;
+
 
     public String getGreeting() {
         return "Hello world.";
@@ -27,11 +29,13 @@ public class Yahtzee {
     }
 
     public int scoreYahtzee(List<Integer> dice) {
+        final int yahtzeeScore = 50;
+
         if (getDieFrequencyScore(dice, dice.get(0)) != 5) {
             return 0;
         }
 
-        return 50;
+        return yahtzeeScore;
     }
 
     public int scoreOnes(List<Integer> dice) {
@@ -66,7 +70,7 @@ public class Yahtzee {
     }
 
     public int scoreTwoPairs(List<Integer> dice) {
-        int twoPairScore = 0;
+        int twoPairScore;
         final int numberOfDiceInTwoPairs = 4;
 
         List<Integer> duplicateList = getDuplicates(dice, 2);
@@ -88,18 +92,22 @@ public class Yahtzee {
     }
 
     public int scoreSmallStraight(List<Integer> dice) {
+        final int smallStraightScore = 15;
+
         if(dice.containsAll(populateDice(1, 2, 3, 4, 5))) {
-            return 1+2+3+4+5;
+            return smallStraightScore;
         } else {
-            return 0;
+            return invalidCategoryScore;
         }
     }
 
     public int scoreLargeStraight(List<Integer> dice) {
+        final int largeStraightScore = 20;
+
         if(dice.containsAll(populateDice(2, 3, 4, 5, 6))) {
-            return 2+3+4+5+6;
+            return largeStraightScore;
         } else {
-            return 0;
+            return invalidCategoryScore;
         }
     }
 
@@ -108,7 +116,7 @@ public class Yahtzee {
         int tripleScore = getDuplicates(dice, 3).get(0) * 3;
 
         if (pairScore == 0 || tripleScore == 0) {
-            return 0;
+            return invalidCategoryScore;
         }
         return pairScore + tripleScore;
     }
@@ -121,16 +129,10 @@ public class Yahtzee {
         return Collections.frequency(dice, i) * i;
     }
 
-
     private List<Integer> getDuplicates(List<Integer> dice, int numDuplicates) {
-        List<Integer> duplicates = new ArrayList<>();
-
-        for (int i = 0; i < dice.size(); i++) {
-            if (Collections.frequency(dice, dice.get(i)) == numDuplicates) {
-                duplicates.add(dice.get(i));
-            }
-        }
-
-        return duplicates;
+        return dice
+                .stream()
+                .filter(dieValue -> Collections.frequency(dice, dieValue) == numDuplicates)
+                .collect(Collectors.toList());
     }
 }
