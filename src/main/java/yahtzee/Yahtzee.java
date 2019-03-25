@@ -131,4 +131,14 @@ public class Yahtzee {
             return 0;
         }
     }
+
+    public int scoreFullHouse(List<Integer> dice) {
+        int pairScore = getDuplicates(dice, 2).get(0) * 2;
+        int tripleScore = getDuplicates(dice, 3).get(0) * 3;
+
+        if (pairScore == 0 || tripleScore ==0) {
+            return 0;
+        }
+        return pairScore + tripleScore;
+    }
 }

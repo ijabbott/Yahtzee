@@ -190,4 +190,13 @@ public class YahtzeeTest {
         int score = yahtzee.scoreLargeStraight(dice);
         assertEquals(sumLargeStraight, score);
     }
+
+    @Test
+    public void GivenPairAndTripleThenFullHouseReturnsSumOfAllDice(){
+        final int sumFullHouse = 8;
+        dice = populateDice(1, 2, 1, 2, 2);
+        int score = yahtzee.scoreFullHouse(dice);
+        assertEquals(sumFullHouse, score);
+
+    }
 }
