@@ -19,7 +19,7 @@ public class Yahtzee {
     public int scoreChance(List<Integer> dice) {
         int total = 0;
 
-        for(int i = 0; i < dice.size(); i++){
+        for (int i = 0; i < dice.size(); i++) {
             total += dice.get(i);
         }
 
@@ -27,7 +27,7 @@ public class Yahtzee {
     }
 
     public int scoreYahtzee(List<Integer> dice) {
-        if(getDieFrequencyScore(dice, dice.get(0)) != 5) {
+        if (getDieFrequencyScore(dice, dice.get(0)) != 5) {
             return 0;
         }
 
@@ -73,7 +73,7 @@ public class Yahtzee {
 
         List<Integer> duplicateList = getDuplicates(dice, 2);
 
-        if(duplicateList.size() == 4) {
+        if (duplicateList.size() == 4) {
             for (int i = 0; i < duplicateList.size(); i++) {
                 twoPairScore += duplicateList.get(i);
             }
@@ -85,8 +85,8 @@ public class Yahtzee {
     private List<Integer> getDuplicates(List<Integer> dice, int numDuplicates) {
         List<Integer> duplicates = new ArrayList<>();
 
-        for (int i = 0; i < dice.size(); i++ ) {
-            if(Collections.frequency(dice, dice.get(i)) == numDuplicates) {
+        for (int i = 0; i < dice.size(); i++) {
+            if (Collections.frequency(dice, dice.get(i)) == numDuplicates) {
                 duplicates.add(dice.get(i));
             }
         }
@@ -100,5 +100,35 @@ public class Yahtzee {
 
     public int scoreFourOfAKind(List<Integer> dice) {
         return getDuplicates(dice, 4).get(0) * 4;
+    }
+
+    public int scoreSmallStraight(List<Integer> dice) {
+        Collections.sort(dice);
+
+        int expectedValue = 1;
+
+        for (Integer side : dice) {
+            if (side == expectedValue) {
+                expectedValue++;
+            } else {
+                return 0;
+            }
+        }
+
+        return 15;
+    }
+
+    public int scoreLargeStraight(List<Integer> dice) {
+        Collections.sort(dice);
+
+        if (dice.get(0) == 2 &&
+            dice.get(1) == 3 &&
+            dice.get(2) == 4 &&
+            dice.get(3) == 5 &&
+            dice.get(4) == 6) {
+            return 20;
+        } else {
+            return 0;
+        }
     }
 }

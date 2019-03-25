@@ -174,4 +174,20 @@ public class YahtzeeTest {
         int score = yahtzee.scoreFourOfAKind(dice);
         assertEquals(sumOfQuad, score);
     }
+
+    @Test
+    public void GivenSmallStraightThenSmallStraightCategoryReturns15() {
+        final int sumSmallStraight = 15;
+        dice = populateDice(1, 2, 3, 5, 4);
+        int score = yahtzee.scoreSmallStraight(dice);
+        assertEquals(sumSmallStraight, score);
+    }
+
+    @Test
+    public void GivenLargeStraightThenLargeStraightCategoryReturns20() {
+        final int sumLargeStraight = 20;
+        dice = populateDice(2, 3, 4, 5, 6);
+        int score = yahtzee.scoreLargeStraight(dice);
+        assertEquals(sumLargeStraight, score);
+    }
 }
