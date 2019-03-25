@@ -72,6 +72,7 @@ public class Yahtzee {
         int twoPairScore = 0;
 
         List<Integer> duplicateList = getDuplicates(dice, 2);
+
         if(duplicateList.size() == 4) {
             for (int i = 0; i < duplicateList.size(); i++) {
                 twoPairScore += duplicateList.get(i);
@@ -83,6 +84,7 @@ public class Yahtzee {
 
     private List<Integer> getDuplicates(List<Integer> dice, int numDuplicates) {
         List<Integer> duplicates = new ArrayList<>();
+
         for (int i = 0; i < dice.size(); i++ ) {
             if(Collections.frequency(dice, dice.get(i)) == numDuplicates) {
                 duplicates.add(dice.get(i));
@@ -90,5 +92,13 @@ public class Yahtzee {
         }
 
         return duplicates;
+    }
+
+    public int scoreThreeOfAKind(List<Integer> dice) {
+        return getDuplicates(dice, 3).get(0) * 3;
+    }
+
+    public int scoreFourOfAKind(List<Integer> dice) {
+        return getDuplicates(dice, 4).get(0) * 4;
     }
 }

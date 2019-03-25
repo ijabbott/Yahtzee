@@ -158,4 +158,20 @@ public class YahtzeeTest {
         int score = yahtzee.scoreTwoPairs(dice);
         assertEquals(sumOfPairDice, score);
     }
+
+    @Test
+    public void GivenThreeOfAKindThenThreeOfAKindCategoryReturnsSumOfThreeOfAKind(){
+        final int sumOfThreeOfAKindDice = 15;
+        dice = populateDice(1, 2, 5, 5, 5);
+        int score = yahtzee.scoreThreeOfAKind(dice);
+        assertEquals(sumOfThreeOfAKindDice, score);
+    }
+
+    @Test
+    public void GivenFourOfAKindThenFourOfAKindCategoryReturnsSumOfQuad() {
+        final int sumOfQuad = 16;
+        dice = populateDice(4, 4, 4, 1, 4);
+        int score = yahtzee.scoreFourOfAKind(dice);
+        assertEquals(sumOfQuad, score);
+    }
 }
