@@ -15,16 +15,6 @@ public class YahtzeeTest {
     private Yahtzee yahtzee;
     private List<Integer> dice;
 
-    private List<Integer> populateDice(int die1, int die2, int die3, int die4, int die5) {
-        ArrayList<Integer> newDice = new ArrayList<>();
-        newDice.add(die1);
-        newDice.add(die2);
-        newDice.add(die3);
-        newDice.add(die4);
-        newDice.add(die5);
-        return newDice;
-    }
-
     @Before
     public void setUp() {
         yahtzee = new Yahtzee();
@@ -35,7 +25,7 @@ public class YahtzeeTest {
     public void GivenChanceCategoryReturnsSumOfAllDice() {
         final int sumOfAllDice = 5;
 
-        dice = populateDice(1, 1, 1, 1, 1);
+        dice = yahtzee.populateDice(1, 1, 1, 1, 1);
         int score = yahtzee.scoreChance(dice);
 
         assertEquals(sumOfAllDice, score);
@@ -45,7 +35,7 @@ public class YahtzeeTest {
     public void GivenDiceAllTheSameYahtzeeCategoryReturns50() {
         final int yahtzeeScore = 50;
 
-        dice = populateDice(1, 1, 1, 1, 1);
+        dice = yahtzee.populateDice(1, 1, 1, 1, 1);
 
         int score = yahtzee.scoreYahtzee(dice);
         assertEquals(yahtzeeScore, score);
@@ -55,7 +45,7 @@ public class YahtzeeTest {
     public void GivenDiceOneOrMoreNotSameYahtzeeCategoryReturns0() {
         final int doesNotMeetCategoryRequirements = 0;
 
-        dice = populateDice(2, 1, 1, 1, 1);
+        dice = yahtzee.populateDice(2, 1, 1, 1, 1);
 
         int score = yahtzee.scoreYahtzee(dice);
         assertEquals(doesNotMeetCategoryRequirements, score);
@@ -65,7 +55,7 @@ public class YahtzeeTest {
     public void GivenDuplicateOnesNumbersCategoryReturnsSumOfOnes() {
         final int sumOfAllDice = 5;
 
-        dice = populateDice(1, 1, 1, 1, 1);
+        dice = yahtzee.populateDice(1, 1, 1, 1, 1);
 
         int score = yahtzee.scoreOnes(dice);
         assertEquals(sumOfAllDice, score);
@@ -74,7 +64,7 @@ public class YahtzeeTest {
     @Test
     public void GivenDuplicateTwosNumbersCategoryReturnsSumOfTwos(){
         final int sumOfAllDice = 4;
-        dice = populateDice(2, 2, 1, 1, 1);
+        dice = yahtzee.populateDice(2, 2, 1, 1, 1);
         int score = yahtzee.scoreTwos(dice);
         assertEquals(sumOfAllDice, score);
     }
@@ -82,7 +72,7 @@ public class YahtzeeTest {
     @Test
     public void GivenDuplicateThreesNumbersCategoryReturnsSumOfThrees(){
         final int sumOfAllDice = 6;
-        dice = populateDice(3, 3, 1, 1, 1);
+        dice = yahtzee.populateDice(3, 3, 1, 1, 1);
         int score = yahtzee.scoreThrees(dice);
         assertEquals(sumOfAllDice, score);
     }
@@ -90,7 +80,7 @@ public class YahtzeeTest {
     @Test
     public void GivenDuplicateFoursNumbersCategoryReturnsSumOfFours(){
         final int sumOfAllDice = 8;
-        dice = populateDice(4, 4, 1, 1, 1);
+        dice = yahtzee.populateDice(4, 4, 1, 1, 1);
         int score = yahtzee.scoreFours(dice);
         assertEquals(sumOfAllDice, score);
     }
@@ -98,7 +88,7 @@ public class YahtzeeTest {
     @Test
     public void GivenDuplicateFivesNumbersCategoryReturnsSumOfFives(){
         final int sumOfAllDice = 10;
-        dice = populateDice(5, 5, 1, 1, 1);
+        dice = yahtzee.populateDice(5, 5, 1, 1, 1);
         int score = yahtzee.scoreFives(dice);
         assertEquals(sumOfAllDice, score);
     }
@@ -106,7 +96,7 @@ public class YahtzeeTest {
     @Test
     public void GivenDuplicateSixesNumbersCategoryReturnsSumOfSixes(){
         final int sumOfAllDice = 12;
-        dice = populateDice(6, 6, 1, 1, 1);
+        dice = yahtzee.populateDice(6, 6, 1, 1, 1);
         int score = yahtzee.scoreSixes(dice);
         assertEquals(sumOfAllDice, score);
     }
@@ -114,7 +104,7 @@ public class YahtzeeTest {
     @Test
     public void GivenNoSixesThenSixesCategoryReturnsZero(){
         final int doesNotMeetCategoryRequirements = 0;
-        dice = populateDice(1, 1, 1, 1, 1);
+        dice = yahtzee.populateDice(1, 1, 1, 1, 1);
         int score = yahtzee.scoreSixes(dice);
         assertEquals(doesNotMeetCategoryRequirements, score );
     }
@@ -122,7 +112,7 @@ public class YahtzeeTest {
     @Test
     public void GivenPairThenPairCategoryReturnsSumOfTopPair(){
         final int sumOfPairDice = 8;
-        dice = populateDice(3, 3, 3, 4, 4);
+        dice = yahtzee.populateDice(3, 3, 3, 4, 4);
         int score = yahtzee.scorePair(dice);
         assertEquals(sumOfPairDice, score);
     }
@@ -130,7 +120,7 @@ public class YahtzeeTest {
     @Test
     public void GivenPairThenPairCategoryReturnsSumOfPair(){
         final int sumOfPairDice = 6;
-        dice = populateDice(2, 5, 3, 3, 4);
+        dice = yahtzee.populateDice(2, 5, 3, 3, 4);
         int score = yahtzee.scorePair(dice);
         assertEquals(sumOfPairDice, score);
     }
@@ -138,7 +128,7 @@ public class YahtzeeTest {
     @Test
     public void GivenTwoPairThenPairCategoryReturnsSumOfHighestPair(){
         final int sumOfPairDice = 10;
-        dice = populateDice(3, 3, 5, 5, 4);
+        dice = yahtzee.populateDice(3, 3, 5, 5, 4);
         int score = yahtzee.scorePair(dice);
         assertEquals(sumOfPairDice, score);
     }
@@ -146,7 +136,7 @@ public class YahtzeeTest {
     @Test
     public void GivenTwoPairsThenTwoPairsCategoryReturnsSumOfHighestPairs(){
         final int sumOfPairDice = 16;
-        dice = populateDice(3, 3, 5, 5, 4);
+        dice = yahtzee.populateDice(3, 3, 5, 5, 4);
         int score = yahtzee.scoreTwoPairs(dice);
         assertEquals(sumOfPairDice, score);
     }
@@ -154,7 +144,7 @@ public class YahtzeeTest {
     @Test
     public void GivenOnePairThenTwoPairsCategoryReturns0(){
         final int sumOfPairDice = 0;
-        dice = populateDice(1, 2, 5, 5, 4);
+        dice = yahtzee.populateDice(1, 2, 5, 5, 4);
         int score = yahtzee.scoreTwoPairs(dice);
         assertEquals(sumOfPairDice, score);
     }
@@ -162,7 +152,7 @@ public class YahtzeeTest {
     @Test
     public void GivenThreeOfAKindThenThreeOfAKindCategoryReturnsSumOfThreeOfAKind(){
         final int sumOfThreeOfAKindDice = 15;
-        dice = populateDice(1, 2, 5, 5, 5);
+        dice = yahtzee.populateDice(1, 2, 5, 5, 5);
         int score = yahtzee.scoreThreeOfAKind(dice);
         assertEquals(sumOfThreeOfAKindDice, score);
     }
@@ -170,7 +160,7 @@ public class YahtzeeTest {
     @Test
     public void GivenFourOfAKindThenFourOfAKindCategoryReturnsSumOfQuad() {
         final int sumOfQuad = 16;
-        dice = populateDice(4, 4, 4, 1, 4);
+        dice = yahtzee.populateDice(4, 4, 4, 1, 4);
         int score = yahtzee.scoreFourOfAKind(dice);
         assertEquals(sumOfQuad, score);
     }
@@ -178,7 +168,7 @@ public class YahtzeeTest {
     @Test
     public void GivenSmallStraightThenSmallStraightCategoryReturns15() {
         final int sumSmallStraight = 15;
-        dice = populateDice(1, 2, 3, 5, 4);
+        dice = yahtzee.populateDice(1, 2, 3, 5, 4);
         int score = yahtzee.scoreSmallStraight(dice);
         assertEquals(sumSmallStraight, score);
     }
@@ -186,7 +176,7 @@ public class YahtzeeTest {
     @Test
     public void GivenLargeStraightThenLargeStraightCategoryReturns20() {
         final int sumLargeStraight = 20;
-        dice = populateDice(2, 3, 4, 5, 6);
+        dice = yahtzee.populateDice(2, 3, 4, 5, 6);
         int score = yahtzee.scoreLargeStraight(dice);
         assertEquals(sumLargeStraight, score);
     }
@@ -194,7 +184,7 @@ public class YahtzeeTest {
     @Test
     public void GivenPairAndTripleThenFullHouseReturnsSumOfAllDice(){
         final int sumFullHouse = 8;
-        dice = populateDice(1, 2, 1, 2, 2);
+        dice = yahtzee.populateDice(1, 2, 1, 2, 2);
         int score = yahtzee.scoreFullHouse(dice);
         assertEquals(sumFullHouse, score);
 

@@ -3,9 +3,7 @@
  */
 package yahtzee;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Yahtzee {
     public String getGreeting() {
@@ -58,40 +56,26 @@ public class Yahtzee {
         return getDieFrequencyScore(dice, 6);
     }
 
-    private int getDieFrequencyScore(List<Integer> dice, int i) {
-        return Collections.frequency(dice, i) * i;
-    }
-
     public int scorePair(List<Integer> dice) {
-        List<Integer> duplicateList = getDuplicates(dice, 2);
-        int maxPair = Collections.max(duplicateList);
-        return maxPair * 2;
+        int numberDuplicates = 2;
+        List<Integer> duplicateList = getDuplicates(dice, numberDuplicates);
+        int maxValue = Collections.max(duplicateList);
+        return maxValue * numberDuplicates;
     }
 
     public int scoreTwoPairs(List<Integer> dice) {
         int twoPairScore = 0;
+        final int numberOfDiceInTwoPairs = 4;
 
         List<Integer> duplicateList = getDuplicates(dice, 2);
 
-        if (duplicateList.size() == 4) {
+        if (duplicateList.size() == numberOfDiceInTwoPairs) {
             for (int i = 0; i < duplicateList.size(); i++) {
                 twoPairScore += duplicateList.get(i);
             }
         }
 
         return twoPairScore;
-    }
-
-    private List<Integer> getDuplicates(List<Integer> dice, int numDuplicates) {
-        List<Integer> duplicates = new ArrayList<>();
-
-        for (int i = 0; i < dice.size(); i++) {
-            if (Collections.frequency(dice, dice.get(i)) == numDuplicates) {
-                duplicates.add(dice.get(i));
-            }
-        }
-
-        return duplicates;
     }
 
     public int scoreThreeOfAKind(List<Integer> dice) {
@@ -103,30 +87,16 @@ public class Yahtzee {
     }
 
     public int scoreSmallStraight(List<Integer> dice) {
-        Collections.sort(dice);
-
-        int expectedValue = 1;
-
-        for (Integer side : dice) {
-            if (side == expectedValue) {
-                expectedValue++;
-            } else {
-                return 0;
-            }
+        if(dice.containsAll(populateDice(1, 2, 3, 4, 5))) {
+            return 1+2+3+4+5;
+        } else {
+            return 0;
         }
-
-        return 15;
     }
 
     public int scoreLargeStraight(List<Integer> dice) {
-        Collections.sort(dice);
-
-        if (dice.get(0) == 2 &&
-            dice.get(1) == 3 &&
-            dice.get(2) == 4 &&
-            dice.get(3) == 5 &&
-            dice.get(4) == 6) {
-            return 20;
+        if(dice.containsAll(populateDice(2, 3, 4, 5, 6))) {
+            return 2+3+4+5+6;
         } else {
             return 0;
         }
@@ -136,9 +106,30 @@ public class Yahtzee {
         int pairScore = getDuplicates(dice, 2).get(0) * 2;
         int tripleScore = getDuplicates(dice, 3).get(0) * 3;
 
-        if (pairScore == 0 || tripleScore ==0) {
+        if (pairScore == 0 || tripleScore == 0) {
             return 0;
         }
         return pairScore + tripleScore;
+    }
+
+    public List<Integer> populateDice(Integer ...dies) {
+        return new ArrayList<>(Arrays.asList(dies));
+    }
+
+    private int getDieFrequencyScore(List<Integer> dice, int i) {
+        return Collections.frequency(dice, i) * i;
+    }
+
+
+    private List<Integer> getDuplicates(List<Integer> dice, int numDuplicates) {
+        List<Integer> duplicates = new ArrayList<>();
+
+        for (int i = 0; i < dice.size(); i++) {
+            if (Collections.frequency(dice, dice.get(i)) == numDuplicates) {
+                duplicates.add(dice.get(i));
+            }
+        }
+
+        return duplicates;
     }
 }
