@@ -6,6 +6,8 @@ package yahtzee;
 import java.util.*;
 
 public class Yahtzee {
+    final int invalidCategoryScore = 0;
+
     public String getGreeting() {
         return "Hello world.";
     }
@@ -69,11 +71,10 @@ public class Yahtzee {
 
         List<Integer> duplicateList = getDuplicates(dice, 2);
 
-        if (duplicateList.size() == numberOfDiceInTwoPairs) {
-            for (int i = 0; i < duplicateList.size(); i++) {
-                twoPairScore += duplicateList.get(i);
-            }
-        }
+        if(duplicateList.size() != numberOfDiceInTwoPairs)
+            return invalidCategoryScore;
+
+        twoPairScore = duplicateList.stream().mapToInt(Integer::intValue).sum();
 
         return twoPairScore;
     }
